@@ -6,7 +6,7 @@
     <groupId>API_TEST_AUTOMATION_FRAMEWORK</groupId>
     <artifactId>API_TEST_AUTOMATION_FRAMEWORK</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+ 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
