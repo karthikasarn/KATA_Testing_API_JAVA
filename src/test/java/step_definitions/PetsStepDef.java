@@ -1,37 +1,37 @@
 package step_definitions;
 
-import com.jayway.restassured.response.ResponseBody;
-import cucumber.api.PendingException;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import dto.Pet;
-import dto.Pets;
 import org.junit.Assert;
+
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import io.restassured.response.ResponseBody;
 import support.MyConfig;
 import support.SupportFunctions;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PetsStepDef {
 
     private static ResponseBody body;
+    private static String ownerID = " ";
 
-    @When("^I want to know all the pets in the clinic$")
-    public void i_want_to_know_all_the_pets_in_the_clinic() throws Throwable {
-        body = SupportFunctions.get(MyConfig.Endpoint + "api/pets");
-        System.out.println(body.asString());
-
+    @When("user wants to add a new pet with {string}")
+    public void user_wants_to_add_new_pet(String jsonFile) throws Throwable {
+    	String jsonData = "";
+    	jsonData = SupportFunctions.readJsonFromFile(jsonFile);
+		System.out.println("Read data: " + jsonData);
+		body = SupportFunctions.post(MyConfig.Endpoint + "api/pets",jsonData);
+		System.out.println(body.asString() + SupportFunctions.getResponseCode());
+		ownerID =body.asString().split("birthDate")[0];
+		System.out.println(ownerID);
+		Assert.assertEquals("Response Code",201,SupportFunctions.getResponseCode());
     }
 
 
-    @Then("^I should receive 13 pets$")
-    public void i_should_receive_pets() throws Throwable {
-        Pet[] petsDTO = SupportFunctions.convertResponseArray(Pet[].class);
-        int amountOfPets = petsDTO.length;
-        Assert.assertEquals("the amount of pets is 13 | ",13,amountOfPets);
+    @Then("validate the {int} and pet details added")
+    public void validate_the_pet_details_added(int statusCode) throws Throwable {
+    	body = SupportFunctions.get(MyConfig.Endpoint + "api/pets");
+    	System.out.println(body.asString() + SupportFunctions.getResponseCode());
+    	Assert.assertEquals("Response Code",statusCode,SupportFunctions.getResponseCode());
+        Assert.assertTrue(body.asString().contains(ownerID));
     }
 
 }

@@ -1,0 +1,19 @@
+{
+  "birthDate": "2022-06-22T07:14:04.845Z",
+  "id": 2,
+  "name": "kar",
+  "owner": {
+    "address": "test",
+    "city": "test",
+    "firstName": "Frank",
+    "id": 2,
+    "lastName": "Temple",
+    "pets": [],
+    "telephone": "01234567891"
+  },
+  "type": {
+    "id": 2,
+    "name": "cat"
+  },
+  "visits": []
+}

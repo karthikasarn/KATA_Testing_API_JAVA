@@ -1,6 +1,9 @@
-Feature: Pets APIs
+Feature: To validate the pet APIs
 
-  @get_pets
-  Scenario: Get all the PETS
-    When I want to know all the pets in the clinic
-    Then I should receive 13 pets
+Scenario Outline: add a new pet
+    When user wants to add a new pet with '<jsonFile>'
+    Then validate the <statusCode> and pet details added
+
+Examples: 
+| jsonFile                            | statusCode |
+| src/test/resources/add_pet_201.json |        200 |
